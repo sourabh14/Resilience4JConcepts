@@ -16,7 +16,7 @@ becomes unresponsive, it can cause a ripple effect:
 - **System-wide Impact**: The failure can propagate, causing other services to fail or degrade in performance, leading to a cascade failure throughout the system.
 
 ### Circuit Breaker States
-![img.png](img.png)
+![img.png](images/img.png)
 **Closed State:**
 - The circuit breaker starts in this state and allows requests to pass through to the service.
 - If the requests succeed, the breaker remains closed.
@@ -67,8 +67,8 @@ If the failure rate and slow call rate is below the threshold, the state changes
 ## Demo
 
 In our project we have created two services:
-- order-service (port 8080): Provides list of orders in api response
-- user-service (port: 8081): Calls order-service to fetch orders
+- **order-service** (port 8080): Provides list of orders in api response
+- **user-service** (port: 8081): Calls order-service to fetch orders
 
 Circuit breaker is implemented at user-service to introduce fault tolerance.
 
@@ -96,23 +96,23 @@ resilience4j.circuitbreaker.instances.userService.sliding-window-type=count_base
 ```
 
 Start both the services:
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 Hit user-service api. This works fine as of now. The health api shows it is in CLOSED state.
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 Now stop the order-service. Once we make 5 failed calls, the breaker will 
 transition to OPEN state. During open state, it will give 503 response.
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 After 5 seconds it transitions to HALF_OPEN automatically
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 In HALF_OPEN state, we allow 3 api calls. If they fail again, 
 it moves to OPEN state. If they pass, it will move to CLOSED state.
