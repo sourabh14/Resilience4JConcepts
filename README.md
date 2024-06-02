@@ -17,6 +17,7 @@ becomes unresponsive, it can cause a ripple effect:
 
 ### Circuit Breaker States
 ![img.png](images/img.png)
+
 **Closed State:**
 - The circuit breaker starts in this state and allows requests to pass through to the service.
 - If the requests succeed, the breaker remains closed.
